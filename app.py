@@ -1,10 +1,10 @@
+import cv2
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input as mobilenet_v2_preprocess_input
 import numpy as np
 from PIL import Image, ImageOps
-import cv2
 
 # Define the path to your model file
 MODEL_PATH = "path/to/your/model.h5"
@@ -27,8 +27,11 @@ def import_and_predict(image_data, model):
     size = (224, 224)
     image_object = ImageOps.fit(image_data, size, Image.LANCZOS)
     image_array = np.asarray(image_object)
-    image_cv = cv2.cvtColor(image_array, cv2.COLOR_BGR2RGB)
-    img_reshape = image_cv[np.newaxis, ...]
+    img_reshape = image_array[np.newaxis, ...]
+
+    # Display the reshaped image
+    st.image(img_reshape, channels="RGB", use_column_width=True)
+
     prediction = model.predict(img_reshape)
     return prediction
 
