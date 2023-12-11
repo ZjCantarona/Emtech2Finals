@@ -1,31 +1,67 @@
-import cv2
-import numpy as np
 import streamlit as st
 import tensorflow as tf
-from tensorflow.keras.preprocessing import image
-from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2,preprocess_input as mobilenet_v2_preprocess_input
+import numpy as np
+from PIL import Image, ImageOps
+from tensorflow.keras.preprocessing.image import img_to_array
+from keras.models import load_model
 
-model = tf.keras.models.load_model("saved_model/mdl_wts.hdf5")
-### load file
-uploaded_file = st.file_uploader("Choose a image file", type="jpg")
+@st.cache(allow_output_mutation=True)
+def load_fashion_model():
+    model = tf.keras.models.load_model('saved_fashion.h5')
+    return model
 
+def import_and_predict(image_data, model):
+    size = (28, 28)
+
+    # Ensure image_data is in the correct data type and range
+    image_data = (image_data * 255).astype(np.uint8)
+    # Convert the NumPy array to an Image instance
+    image = Image.fromarray(image_data)
+    # Use ImageOps.fit with the Image instance
+    
+    image = ImageOps.fit(image, size)
+    img = np.asarray(image)
+    
+    img = img[:, :, 0]
+
+    img_reshape = img[np.newaxis, ..., np.newaxis]
+    prediction = model.predict(img_reshape)
+    return prediction
+
+def load_image():
+
+    
+    # Check if the image is grayscale, if so, add a channel dimension
+    if len(img.shape) == 2:
+        img = np.expand_dims(img, axis=-1)
+    
+    img = img / 255.0
+    img = np.reshape(img, (1, 64, 64, img.shape[-1]))
+    return img
+
+model = load_fashion_model()
+
+st.write("""Item Purchase""")
+file = st.file_uploader("Choose photo from computer", type=["jpg", "png"])
 
 if file is None:
     st.text("Please upload an image file")
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    opencv_image = cv2.imdecode(file_bytes, 1)
-    opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
-    resized = cv2.resize(opencv_image,(224,224))
-    # Now do something with the image! For example, let's display it:
-    st.image(opencv_image, channels="RGB")
-
-    resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized[np.newaxis,...]
-
 else:
     image = Image.open(file)
     st.image(image, use_column_width=True)
-    predictions = import_and_predict(image, load_model())
-    class_names = ['Vegetables','Packages', 'Fruits']
-    string="This image is: "+class_names[np.argmax(predictions)]
+
+    # Convert the image to a NumPy array
+    image_array = img_to_array(image)
+
+    # Normalize the image
+    image_array = image_array / 255.0
+
+    # Load the image into the model for prediction
+    prediction = import_and_predict(image_array, model)
+
+    class_names = ['Vegetables', 'Packages', 'Fruits']
+
+    result_class = np.argmax(prediction)
+    result_label = class_names[result_class]
+    string = f"Prediction: {result_label} ({prediction[0][result_class]:.2%} confidence)"
     st.success(string)
