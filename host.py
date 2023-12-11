@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from keras.models import load_model
 
 @st.cache(allow_output_mutation=True)
-def load_fashion_model():
+def item_purchase():
     model = tf.keras.models.load_model('model.h5')
     return model
 
