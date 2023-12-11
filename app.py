@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image, ImageOps
 
 # Define the path to your model file
-MODEL_PATH = "Emtech2Finals/model.h5"
+MODEL = "model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
