@@ -5,6 +5,7 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_i
 import numpy as np
 from PIL import Image, ImageOps
 import requests
+import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
 MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/model.h5"
@@ -16,9 +17,9 @@ def load_model():
         response = requests.get(MODEL_URL)
         response.raise_for_status()
         
-        # Load the model from the content of the response
+        # Load the model from the content of the response using io.BytesIO
         model_content = response.content
-        return tf.keras.models.load_model(tf.keras.utils.io.BytesIO(model_content))
+        return tf.keras.models.load_model(io.BytesIO(model_content))
     except Exception as e:
         st.error(f"Error loading the model: {e}")
         return None
