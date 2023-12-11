@@ -7,7 +7,7 @@ from keras.models import load_model
 
 @st.cache(allow_output_mutation=True)
 def load_fashion_model():
-    model = tf.keras.models.load_model('saved_fashion.h5')
+    model = tf.keras.models.load_model('model.h5')
     return model
 
 def import_and_predict(image_data, model):
@@ -39,7 +39,7 @@ def load_image():
     img = np.reshape(img, (1, 64, 64, img.shape[-1]))
     return img
 
-model = load_fashion_model()
+model = item_purchase()
 
 st.write("""Item Purchase""")
 file = st.file_uploader("Choose photo from computer", type=["jpg", "png"])
