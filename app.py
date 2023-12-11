@@ -5,10 +5,10 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_i
 import numpy as np
 from PIL import Image, ImageOps
 import requests
-import io
+import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/your-username/your-repo/raw/master/path/to/your/model.h5"
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -44,19 +44,6 @@ def import_and_predict(image_data, model):
         st.image(img_reshape, channels="RGB", use_column_width=True)
 
         prediction = model.predict(img_reshape)
-        print("Raw Predictions:", prediction)
-
-        class_names = ['Vegetables', 'Packages', 'Fruits']
-        predicted_class_index = np.argmax(prediction)
-        predicted_class_name = class_names[predicted_class_index]
-        confidence_score = np.max(prediction)
-
-        print("Predicted Class:", predicted_class_name)
-        print("Confidence Score:", confidence_score)
-
-        # Display class label and confidence score on Streamlit
-        st.success(f"This image is: {predicted_class_name} with confidence {confidence_score:.2%}")
-
         return prediction
     except Exception as e:
         st.error(f"Error during prediction: {e}")
@@ -74,7 +61,8 @@ else:
         if model is not None:
             predictions = import_and_predict(image, model)
             if predictions is not None:
-                # Additional code, if needed, can be added here
-                pass
+                class_names = ['Vegetables', 'Packages', 'Fruits']
+                string = "This image is: " + class_names[np.argmax(predictions)]
+                st.success(string)
     except Exception as e:
         st.error(f"Unexpected error: {e}")
