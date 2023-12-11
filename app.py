@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image, ImageOps
 
 # Define the path to your model file
-MODEL_PATH = "/content/drive/MyDrive/CPE 019 Final Exam/ItemPurchase/GroceryStoreDataset-master/sample_images/Saved Models/model.h5"
+MODEL_PATH = "Emtech2Finals/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
