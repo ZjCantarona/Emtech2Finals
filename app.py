@@ -1,4 +1,3 @@
-import io
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
@@ -6,9 +5,10 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_i
 import numpy as np
 from PIL import Image, ImageOps
 import requests
+import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/model.h5"
+MODEL_URL = "https://github.com/your-username/your-repo/raw/master/path/to/your/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -17,7 +17,7 @@ def load_model():
         response = requests.get(MODEL_URL)
         response.raise_for_status()
         
-        # Load the model from the content of the response
+        # Load the model from the content of the response using io.BytesIO
         model_content = response.content
         return tf.keras.models.load_model(io.BytesIO(model_content))
     except Exception as e:
@@ -44,6 +44,22 @@ def import_and_predict(image_data, model):
         st.image(img_reshape, channels="RGB", use_column_width=True)
 
         prediction = model.predict(img_reshape)
+        print("Raw Predictions:", prediction)
+
+        class_names = ['Vegetables', 'Packages', 'Fruits']
+        predicted_class_index = np.argmax(prediction)
+        predicted_class_name = class_names[predicted_class_index]
+
+        print("Predicted Class:", predicted_class_name)
+
+        # Threshold for displaying predictions
+        threshold = 0.5
+        if np.max(prediction) > threshold:
+            string = "This image is: " + predicted_class_name
+            st.success(string)
+        else:
+            st.warning("Model confidence is below the threshold.")
+
         return prediction
     except Exception as e:
         st.error(f"Error during prediction: {e}")
@@ -61,8 +77,7 @@ else:
         if model is not None:
             predictions = import_and_predict(image, model)
             if predictions is not None:
-                class_names = ['Vegetables', 'Packages', 'Fruits']
-                string = "This image is: " + class_names[np.argmax(predictions)]
-                st.success(string)
+                # Additional code, if needed, can be added here
+                pass
     except Exception as e:
         st.error(f"Unexpected error: {e}")
