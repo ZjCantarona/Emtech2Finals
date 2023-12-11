@@ -17,7 +17,7 @@ st.write("""
 
 file = st.file_uploader("Choose item images from computer", type=["jpg", "png"])
 
-import cv
+import cv2
 from PIL import Image,ImageOps
 import numpy as np
 st.set_option('deprecation.showfileUploaderEncoding', False)
@@ -25,7 +25,7 @@ def import_and_predict(image_data, model):
     size = (224, 224)    
     image_object = ImageOps.fit(image_data, size, Image.LANCZOS)
     image_array = np.asarray(image_object)
-    image_cv = cv.cvtColor(image_array, cv2.COLOR_BGR2RGB)
+    image_cv = cv2.cvtColor(image_array, cv2.COLOR_BGR2RGB)
     img_reshape = image_cv[np.newaxis,...]
     prediction=model.predict(img_reshape)
     return prediction
