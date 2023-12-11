@@ -9,8 +9,10 @@ Original file is located at
 
 
 
-#!pip install streamlit
-#!pip install pyngrok
+!pip install streamlit
+!pip install pyngrok
+!pip install streamlit
+!pip install opencv-python
 
 import cv2
 import numpy as np
