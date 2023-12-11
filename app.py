@@ -44,22 +44,6 @@ def import_and_predict(image_data, model):
         st.image(img_reshape, channels="RGB", use_column_width=True)
 
         prediction = model.predict(img_reshape)
-        print("Raw Predictions:", prediction)
-
-        class_names = ['Vegetables', 'Packages', 'Fruits']
-        predicted_class_index = np.argmax(prediction)
-        predicted_class_name = class_names[predicted_class_index]
-
-        print("Predicted Class:", predicted_class_name)
-
-        # Threshold for displaying predictions
-        threshold = 0.5
-        if np.max(prediction) > threshold:
-            string = "This image is: " + predicted_class_name
-            st.success(string)
-        else:
-            st.warning("Model confidence is below the threshold.")
-
         return prediction
     except Exception as e:
         st.error(f"Error during prediction: {e}")
@@ -77,7 +61,8 @@ else:
         if model is not None:
             predictions = import_and_predict(image, model)
             if predictions is not None:
-                # Additional code, if needed, can be added here
-                pass
+                class_names = ['Vegetables', 'Packages', 'Fruits']
+                string = "This image is: " + class_names[np.argmax(predictions)]
+                st.success(string)
     except Exception as e:
         st.error(f"Unexpected error: {e}")
