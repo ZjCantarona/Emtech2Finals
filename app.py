@@ -1,5 +1,5 @@
-!pip install streamlit
-!pip install opencv-python
+pip install streamlit
+pip install opencv-python
 
 import streamlit as st
 import tensorflow as tf
