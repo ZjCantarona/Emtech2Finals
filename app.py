@@ -33,7 +33,7 @@ file = st.file_uploader("Choose item images from computer", type=["jpg", "png"])
 
 st.set_option('deprecation.showfileUploaderEncoding', False)
 
-def import_and_predict(image_data, model):
+def import_and_predict(images_arr, model):
     try:
         size = (224, 224)
         image_object = ImageOps.fit(image_data, size, Image.LANCZOS)
