@@ -57,7 +57,16 @@ else:
         st.image(image, use_column_width=True)
 
         # Check if the model is loaded successfully
-        model = load_model("model.h5")
+        model = load_model()
+        
+        def plotImages(images_arr):
+    fig, axes = plt.subplots(1, 2, figsize=(5,5))
+    axes = axes.flatten()
+    for img, ax in zip( images_arr, axes):
+        ax.imshow(img)
+    plt.tight_layout()
+    plt.show()
+
         if model is not None:
             predictions = import_and_predict("results.csv", "model.h5")
             if predictions is not None:
