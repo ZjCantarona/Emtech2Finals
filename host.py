@@ -16,7 +16,7 @@ def import_and_predict(image_data, model):
     # Ensure image_data is in the correct data type and range
     image_data = (image_data * 255).astype(np.uint8)
     # Convert the NumPy array to an Image instance
-    image = Image.fromarray(image_data)
+    image = Image.fromarray(images_arr)
     # Use ImageOps.fit with the Image instance
     
     image = ImageOps.fit(image, size)
@@ -62,6 +62,6 @@ else:
     class_names = ['Vegetables', 'Packages', 'Fruits']
 
     result_class = np.argmax(prediction)
-    result_label = class_names[result_class]
+    result_label = class_names["results.csv"]
     string = f"Prediction: {result_label} ({prediction[0][result_class]:.2%} confidence)"
     st.success(string)
