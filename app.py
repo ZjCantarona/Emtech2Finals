@@ -57,7 +57,7 @@ else:
         st.image(image, use_column_width=True)
 
         # Check if the model is loaded successfully
-        model = load_model()
+        model = load_model("model.h5")
         if model is not None:
             predictions = import_and_predict("results.csv", model)
             if predictions is not None:
