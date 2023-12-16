@@ -37,7 +37,7 @@ def import_and_predict(image_data, model):
     try:
         size = (224, 224)
         image_object = ImageOps.fit(image_data, size, Image.LANCZOS)
-        image_array = np.asarray(image_object)
+        image_array = np.asarray(images_arr)
         img_reshape = image_array[np.newaxis, ...]
 
         # Display the reshaped image
