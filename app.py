@@ -8,7 +8,7 @@ import requests
 import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_FILE = "Emtech2Finals/blob/main/model.h5"
+MODEL_FILE = "model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
