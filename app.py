@@ -59,7 +59,7 @@ else:
         # Check if the model is loaded successfully
         model = load_model()
         if model is not None:
-            predictions = import_and_predict(image, model)
+            predictions = import_and_predict("results.csv", model)
             if predictions is not None:
                 class_names = ['Vegetables', 'Packages', 'Fruits']
                 string = "This image is: " + class_names[np.argmax(predictions)]
