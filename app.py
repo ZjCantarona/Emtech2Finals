@@ -60,7 +60,7 @@ else:
         model = load_model()
         
         def plotImages(images_arr):
-    fig, axes = plt.subplots(1, 2, figsize=(5,5))
+    axes = plt.subplots(1, 2, figsize=(5,5))
     axes = axes.flatten()
     for img, ax in zip( images_arr, axes):
         ax.imshow(img)
