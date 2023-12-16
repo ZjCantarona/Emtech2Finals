@@ -8,13 +8,13 @@ import requests
 import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/model.h5"
+MODEL_FILE = "Emtech2Finals/blob/main/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
     try:
         # Fetch the model from GitHub using requests
-        response = requests.get(MODEL_URL)
+        response = requests.get(MODEL_FILE)
         response.raise_for_status()
         
         # Load the model from the content of the response using io.BytesIO
