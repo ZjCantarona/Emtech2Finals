@@ -8,7 +8,7 @@ import requests
 import io
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Item.hdf5"
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/raw/main/Item.hdf5"
 
 # Load the model
 @st.cache(allow_output_mutation=True)
@@ -58,4 +58,11 @@ if uploaded_file is not None:
 
     if Generate_pred and model is not None:
         prediction = model.predict(img_preprocessed).argmax()
-        st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
+        st.title(f"Predicted Class Index: {prediction}")
+
+        # Check if the predicted index is in map_dict
+        if prediction in map_dict:
+            st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
+        else:
+            st.title("Unexpected prediction index: {}".format(prediction))
+            st.title("Please check the map_dict mapping.")
