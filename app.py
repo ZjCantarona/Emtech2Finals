@@ -29,7 +29,7 @@ st.write("""
          """
         )
 
-file = st.file_uploader("Choose item images from computer", type=["jpg", "png"])
+uploaded_file = st.file_uploader("Choose an image file", type="jpg")
 
 map_dict = {
     0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
@@ -37,7 +37,7 @@ map_dict = {
     2: 'Vegetable (Cabbage, Carrot, Potato, Tomato)',
 }
 
-if uploaded_file is not None:
+if uploader_file is not None:
     # Read the image file
     img = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
 
