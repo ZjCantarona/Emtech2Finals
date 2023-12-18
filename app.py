@@ -8,7 +8,7 @@ import requests
 import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Item.h5"
+MODEL_URL = "https://github.com/your-username/your-repo/raw/master/path/to/your/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -40,17 +40,21 @@ def import_and_predict(image_data, model):
         image_array = np.asarray(image_object)
         img_reshape = image_array[np.newaxis, ...]
 
-        # Display the original image
-        st.image(image_object, channels="RGB", use_column_width=True)
-
         # Apply MobileNetV2 preprocessing
         img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
 
-        prediction = model.predict(img_preprocessed)
-        return prediction
+        # Display the original image
+        st.image(image_object, channels="RGB", use_column_width=True)
+
+        # Make prediction
+        predictions = model.predict(img_preprocessed)
+        class_names = ['Vegetables', 'Packages', 'Fruits']
+        predicted_class = class_names[np.argmax(predictions)]
+
+        # Display the prediction
+        st.success(f"This image is: {predicted_class}")
     except Exception as e:
         st.error(f"Error during prediction: {e}")
-        return None
 
 if file is None:
     st.text("Please upload an image file")
@@ -62,10 +66,6 @@ else:
         # Check if the model is loaded successfully
         model = load_model()
         if model is not None:
-            predictions = import_and_predict(image, model)
-            if predictions is not None:
-                class_names = ['Vegetables', 'Packages', 'Fruits']
-                string = "This image is: " + class_names[np.argmax(predictions)]
-                st.success(string)
+            import_and_predict(image, model)
     except Exception as e:
         st.error(f"Unexpected error: {e}")
