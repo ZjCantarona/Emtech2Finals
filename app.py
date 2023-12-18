@@ -57,7 +57,7 @@ if uploaded_file is not None:
 
     # Preprocess the image
     image_array = np.asarray(image_resized)
-    img_reshape = resized["Fruits", "Vegetables", "Packages"]
+    img_reshape = resized['Fruits', 'Vegetables', 'Packages']
     img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
 
     # Load the model
