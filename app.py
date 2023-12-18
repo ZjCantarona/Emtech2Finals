@@ -8,7 +8,7 @@ import requests
 import io
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://drive.google.com/file/d/1AkiX-p0f0FGpebvmhHoZoVl-MfQu8n_J/view?usp=sharing"
+MODEL_URL = ""/content/drive/MyDrive/Colab Notebooks/GroceryStoreDataset-master/Item.hdf5""
 
 # Load the model
 
