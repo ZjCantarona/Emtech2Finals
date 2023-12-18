@@ -8,7 +8,7 @@ import requests
 import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Item.hdf5"
+MODEL_URL = "https://github.com/your-username/your-repo/raw/master/path/to/your/model.h5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
@@ -40,11 +40,11 @@ def import_and_predict(image_data, model):
         image_array = np.asarray(image_object)
         img_reshape = image_array[np.newaxis, ...]
 
+        # Display the original image
+        st.image(image_object, channels="RGB", use_column_width=True)
+
         # Apply MobileNetV2 preprocessing
         img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
-
-        # Display the reshaped and preprocessed image
-        st.image(img_preprocessed, channels="RGB", use_column_width=True)
 
         prediction = model.predict(img_preprocessed)
         return prediction
