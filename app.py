@@ -48,26 +48,18 @@ map_dict = {
 
 
 if uploaded_file is not None:
-    # Read the image file using PIL
-    image_pil = Image.open(uploaded_file)
+    # Read the image file
+    img = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
 
     # Resize the image to the required dimensions
-    size = (224, 224)
-    image_resized = ImageOps.fit(image_pil, size, Image.LANCZOS)
+    resized = cv2.resize(img, (224, 224))
 
     # Preprocess the image
-    image_array = np.asarray(image_resized)
-    img_reshape = image_array[np.newaxis, ...]
-    img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
-
-    # Load the model
-    model = load_model()
+    resized = mobilenet_v2_preprocess_input(resized)
+    img_reshape = resized["Fruits", "Vegetables", "Packages"]
 
     Generate_pred = st.button("Generate Prediction")
 
-        # Check if the predicted index is in map_dict
-        if prediction in map_dict:
-            st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
-        else:
-            st.title("Unexpected prediction index: {}".format(prediction))
-            st.title("Please check the map_dict mapping.")
+    if Generate_pred:
+        prediction = model.predict(img_reshape).argmax()
+        st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
