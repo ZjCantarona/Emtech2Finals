@@ -4,7 +4,7 @@ from PIL import Image, ImageOps
 import numpy as np
 
 def load_model():
-    model = tf.keras.models.load_model('Item.hdf5')
+    model = tf.keras.models.load_model('model.h5')
     return model
 
 model = load_model()
