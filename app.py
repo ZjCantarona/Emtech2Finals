@@ -40,10 +40,13 @@ def import_and_predict(image_data, model):
         image_array = np.asarray(image_object)
         img_reshape = image_array[np.newaxis, ...]
 
-        # Display the reshaped image
-        st.image(img_reshape, channels="RGB", use_column_width=True)
+        # Apply MobileNetV2 preprocessing
+        img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
 
-        prediction = model.predict(img_reshape)
+        # Display the reshaped and preprocessed image
+        st.image(img_preprocessed, channels="RGB", use_column_width=True)
+
+        prediction = model.predict(img_preprocessed)
         return prediction
     except Exception as e:
         st.error(f"Error during prediction: {e}")
