@@ -8,7 +8,7 @@ import requests
 import io  # Import the standard Python io module
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/your-username/your-repo/raw/master/path/to/your/model.h5"
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Item.hdf5"
 
 @st.cache(allow_output_mutation=True)
 def load_model():
