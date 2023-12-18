@@ -8,8 +8,7 @@ import requests
 import io
 
 # Direct link to the raw model file on GitHub
-model = tf.keras.models.load_model("/content/drive/MyDrive/Colab Notebooks/GroceryStoreDataset-master/Item.hdf5")
-
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Item.hdf5"
 # Load the model
 
 
