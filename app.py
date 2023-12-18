@@ -31,3 +31,4 @@ else:
     class_names = ['Vegetables', 'Packages', 'Fruits']
     string = "OUTPUT : " + class_names[np.argmax(prediction)]
     st.success(string)
+
