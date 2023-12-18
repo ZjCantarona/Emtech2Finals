@@ -34,7 +34,7 @@ uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "p
 
 map_dict = {
     0: 'Apple',
-    1: 'Avocado'.
+    1: 'Avocado',
     2: 'Orange', 
     3: 'Pineapple'',
     4: 'Juice', 
