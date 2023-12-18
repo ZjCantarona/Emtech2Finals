@@ -33,9 +33,9 @@ st.write("""
 uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
 
 map_dict = {
-    0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
-    1: 'Packages(Juice, Milk, Yoghurt)',
-    2: 'Vegetable (Cabbage, Carrot, Potato, Tomato)',
+    0: 'Fruit',
+    1: 'Packages',
+    2: 'Vegetable',
 }
 
 if uploaded_file is not None:
