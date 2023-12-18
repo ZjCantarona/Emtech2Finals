@@ -36,7 +36,7 @@ map_dict = {
     0: 'Apple',
     1: 'Avocado',
     2: 'Orange', 
-    3: 'Pineapple'',
+    3: 'Pineapple',
     4: 'Juice', 
     5: 'Milk', 
     6: 'Yoghurt',
