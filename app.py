@@ -31,41 +31,25 @@ st.write("""
 
 file = st.file_uploader("Choose item images from computer", type=["jpg", "png"])
 
-st.set_option('deprecation.showfileUploaderEncoding', False)
+map_dict = {
+    0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
+    1: 'Packages(Juice, Milk, Yoghurt)',
+    2: 'Vegetable (Cabbage, Carrot, Potato, Tomato)',
+}
 
-def import_and_predict(image_data, model):
-    try:
-        size = (224, 224)
-        image_object = ImageOps.fit(image_data, size, Image.LANCZOS)
-        image_array = np.asarray(image_object)
-        img_reshape = image_array[np.newaxis, ...]
+if uploaded_file is not None:
+    # Read the image file
+    img = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
 
-        # Apply MobileNetV2 preprocessing
-        img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
+    # Resize the image to the required dimensions
+    resized = cv2.resize(img, (224, 224))
 
-        # Display the original image
-        st.image(image_object, channels="RGB", use_column_width=True)
+    # Preprocess the image
+    resized = mobilenet_v2_preprocess_input(resized)
+    img_reshape = resized[np.newaxis, ...]
 
-        # Make prediction
-        predictions = model.predict(img_preprocessed)
-        class_names = ['Vegetables', 'Packages', 'Fruits']
-        predicted_class = class_names[np.argmax(predictions)]
+    Generate_pred = st.button("Generate Prediction")
 
-        # Display the prediction
-        st.success(f"This image is: {predicted_class}")
-    except Exception as e:
-        st.error(f"Error during prediction: {e}")
-
-if file is None:
-    st.text("Please upload an image file")
-else:
-    try:
-        image = Image.open(file)
-        st.image(image, use_column_width=True)
-
-        # Check if the model is loaded successfully
-        model = load_model()
-        if model is not None:
-            import_and_predict(image, model)
-    except Exception as e:
-        st.error(f"Unexpected error: {e}")
+    if Generate_pred:
+        prediction = model.predict(img_reshape).argmax()
+        st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
