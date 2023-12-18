@@ -11,7 +11,9 @@ import io
 MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/raw/main/Item.hdf5"
 
 # Load the model
-@st.cache(allow_output_mutation=True)
+
+
+@st.cache(suppress_st_warning=True)
 def load_model():
     try:
         # Fetch the model from GitHub using requests
