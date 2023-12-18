@@ -23,8 +23,8 @@ map_dict = {0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
             2: 'Vegetable (Cabbage, Carrot, Potato, Tomato)',
             }
 
-resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized[np.newaxis,...]
+#resized = mobilenet_v2_preprocess_input(resized)
+#    img_reshape = resized[np.newaxis,...]
 
 Genrate_pred = st.button("Generate Prediction")
     if Genrate_pred:
