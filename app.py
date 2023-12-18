@@ -8,7 +8,7 @@ import requests
 import io
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://drive.google.com/file/d/1-NVBw2F0amvSnTXfVSdNpELV_GnEzH4P/view?usp=sharing"
+MODEL_URL = "https://drive.google.com/file/d/1AkiX-p0f0FGpebvmhHoZoVl-MfQu8n_J/view?usp=sharing"
 
 # Load the model
 
