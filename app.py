@@ -74,4 +74,4 @@ if uploaded_file is not None:
 
         # Display the predicted class probabilities
         for i, prob in enumerate(predictions):
-            st.text(f"Probability for {map_dict[i]}")
+            st.text(f"Probability for {map_dict}")
