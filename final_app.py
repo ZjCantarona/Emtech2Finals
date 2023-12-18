@@ -10,33 +10,12 @@ model = tf.keras.models.load_model("/content/drive/MyDrive/Colab Notebooks/Groce
 ### load file
 uploaded_file = st.file_uploader("Choose an image file", type="jpg")
 
-map_dict = {
-    0: 'Apple',
-    1: 'Avocado'.
-    2: 'Orange', 
-    3: 'Pineapple'',
-    4: 'Juice', 
-    5: 'Milk', 
-    6: 'Yoghurt',
-    7: 'Cabbage', 
-    8: 'Carrot', 
-    9: 'Potato', 
-    10:'Tomato',
-        }
-
-if uploaded_file is not None:
-    # Convert the file to an opencv image.
-    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
-    opencv_image = cv2.imdecode(file_bytes, 1)
-    opencv_image = cv2.cvtColor(opencv_image, cv2.COLOR_BGR2RGB)
-    resized = cv2.resize(opencv_image,(224,224))
-    # Now do something with the image! For example, let's display it:
-    st.image(opencv_image, channels="RGB")
-
-    resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized[np.newaxis,...]
-
-    Genrate_pred = st.button("Generate Prediction")    
-    if Genrate_pred:
-        prediction = model.predict(img_reshape).argmax()
-        st.title("Predicted Label for the image is {}".format(map_dict [prediction]))
+if file is None:
+    st.text("Please upload an image file")
+else:
+    image=Image.open(file)
+    st.image(image,use_column_width=True)
+    prediction=import_and_predict(image,model)
+    class_names=[ ("Apple", "Avocado", "Orange", "Pineapple", "Juice", "Milk", "Yoghurt", "Cabbage", "Carrot", "Potato", "Tomato" ]
+    string="OUTPUT : "+class_names[np.argmax(prediction)]
+    st.success(string)
