@@ -7,51 +7,26 @@ Original file is located at
     https://colab.research.google.com/drive/1PUCUBHQOtLczM3O3ICARFgH5lGsJ-WRQ
 """
 
-#!pip install streamlit
-#!pip install pyngrok
-
 import cv2
 import numpy as np
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2,preprocess_input as mobilenet_v2_preprocess_input
-from tensorflow.keras import callbacks,optimizers
-import numpy as np
 
-@st.cache_resource
-def load_model():
-  model=tf.keras.models.load_model('/content/drive/MyDrive/Colab Notebooks/GroceryStoreDataset-master/model.h5')
-  return model
+model = tf.keras.models.load_model("/content/drive/MyDrive/Colab Notebooks/GroceryStoreDataset-master/Item.hdf5")
+### load file
+uploaded_file = st.file_uploader("Choose a image file", type="jpg")
 
-from google.colab import drive
-drive.mount('/content/drive')
+map_dict = {0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
+            1: 'Packages(Juice, Milk, Yoghurt)',
+            2: 'Vegetable (Cabbage, Carrot, Potato, Tomato)',
+            }
 
-# Commented out IPython magic to ensure Python compatibility.
-# %cd /content/drive/MyDrive/Colab Notebooks/GroceryStoreDataset-master
+resized = mobilenet_v2_preprocess_input(resized)
+    img_reshape = resized[np.newaxis,...]
 
-st.write("""
-# Selected s from Group 2"""
-)
-file=st.file_uploader("Choose an item photo from computer",type=["jpg","png"])
-
-import cv2
-from PIL import Image,ImageOps
-import numpy as np
-def import_and_predict(image_data,model):
-    size=(64,64)
-    image=ImageOps.fit(image_data,size,Image.ANTIALIAS)
-    img=np.asarray(image)
-    img_reshape=img[np.newaxis,...]
-    prediction=model.predict(img_reshape)
-    return prediction
-
-if file is None:
-    st.text("Please upload an image file")
-else:
-    image=Image.open(file)
-    st.image(image,use_column_width=True)
-    prediction=import_and_predict(image,model)
-    class_names=['Fruits', 'Packages', 'Vegetables']
-    string="OUTPUT : "+class_names[np.argmax(prediction)]
-    st.success(string)
+Genrate_pred = st.button("Generate Prediction")
+    if Genrate_pred:
+        prediction = model.predict(img_reshape).argmax()
+        st.title("Predicted Label for the image is {}".format(map_dict [prediction]))
