@@ -47,19 +47,29 @@ map_dict = {
         }
 
 
+
 if uploaded_file is not None:
-    # Read the image file
-    img = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
+    # Read the image file using PIL
+    image_pil = Image.open(uploaded_file)
 
     # Resize the image to the required dimensions
-    resized = cv2.resize(img, (224, 224))
+    size = (224, 224)
+    image_resized = ImageOps.fit(image_pil, size, Image.LANCZOS)
 
     # Preprocess the image
-    resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized["Fruits", "Vegetables", "Packages"]
+    image_array = np.asarray(image_resized)
+    img_reshape = image_array[np.newaxis, ...]
+    img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
+
+    # Load the model
+    model = load_model()
 
     Generate_pred = st.button("Generate Prediction")
 
-    if Generate_pred:
-        prediction = model.predict(img_reshape).argmax()
-        st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
+    if Generate_pred and model is not None:
+        # Get the prediction probabilities for each class
+        predictions = model.predict(img_preprocessed)[0]
+
+        # Display the predicted class probabilities
+        for i, prob in enumerate(predictions):
+            st.text(f"Probability for {map_dict[i]}: {prob}")
