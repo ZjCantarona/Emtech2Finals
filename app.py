@@ -65,10 +65,6 @@ if uploaded_file is not None:
 
     Generate_pred = st.button("Generate Prediction")
 
-    if Generate_pred and model is not None:
-        prediction = model.predict(img_preprocessed).argmax()
-        st.title(f"Predicted Class Index: {packages}")
-
         # Check if the predicted index is in map_dict
         if prediction in map_dict:
             st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
