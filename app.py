@@ -57,7 +57,7 @@ if uploaded_file is not None:
 
     # Preprocess the image
     image_array = np.asarray(image_resized)
-    img_reshape = resized[ Fruits , Vegetables, Packages]
+    img_reshape = image_array[np.newaxis, ...]
     img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
 
     # Load the model
@@ -67,7 +67,7 @@ if uploaded_file is not None:
 
     if Generate_pred and model is not None:
         prediction = model.predict(img_preprocessed).argmax()
-        st.title(f"Predicted Class Index: {prediction}")
+        st.title(f"Predicted Class Index: {packages}")
 
         # Check if the predicted index is in map_dict
         if prediction in map_dict:
