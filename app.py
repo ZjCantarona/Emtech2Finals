@@ -1,4 +1,3 @@
-import cv2
 import streamlit as st
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image
@@ -6,7 +5,7 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_i
 import numpy as np
 from PIL import Image, ImageOps
 import requests
-import io  # Import the standard Python io module
+import io
 
 # Direct link to the raw model file on GitHub
 MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/raw/main/Item.h5"
@@ -31,7 +30,7 @@ st.write("""
          """
         )
 
-uploaded_file = st.file_uploader("Choose an image file", type="jpg")
+uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
 
 map_dict = {
     0: 'Fruit(Apple, Avocado, Orange, Pineapple)',
@@ -40,15 +39,17 @@ map_dict = {
 }
 
 if uploaded_file is not None:
-    # Read the image file
-    img = cv2.imdecode(np.fromstring(uploaded_file.read(), np.uint8), 1)
+    # Read the image file using PIL
+    image_pil = Image.open(uploaded_file)
 
     # Resize the image to the required dimensions
-    resized = cv2.resize(img, (224, 224))
+    size = (224, 224)
+    image_resized = ImageOps.fit(image_pil, size, Image.LANCZOS)
 
     # Preprocess the image
-    resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized[np.newaxis, ...]
+    image_array = np.asarray(image_resized)
+    img_reshape = image_array[np.newaxis, ...]
+    img_preprocessed = mobilenet_v2_preprocess_input(img_reshape)
 
     # Load the model
     model = load_model()
@@ -56,5 +57,5 @@ if uploaded_file is not None:
     Generate_pred = st.button("Generate Prediction")
 
     if Generate_pred and model is not None:
-        prediction = model.predict(img_reshape).argmax()
+        prediction = model.predict(img_preprocessed).argmax()
         st.title("Predicted Label for the image is {}".format(map_dict[prediction]))
