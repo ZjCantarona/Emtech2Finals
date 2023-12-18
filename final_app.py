@@ -34,7 +34,7 @@ if uploaded_file is not None:
 
     # Preprocess the image
     resized = mobilenet_v2_preprocess_input(resized)
-    img_reshape = resized[np.newaxis, ...]
+    img_reshape = resized["Fruits", "Vegetables, "Packages"]
 
     Generate_pred = st.button("Generate Prediction")
 
