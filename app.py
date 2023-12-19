@@ -8,7 +8,7 @@ import requests
 import io
 
 # Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/85139dcedc74f039507cecd7b55642ac0a7a328b/Item.hdf5"
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Final.h5"
 # Load the model
 
 
