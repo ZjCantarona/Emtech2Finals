@@ -7,24 +7,27 @@ from PIL import Image, ImageOps
 import requests
 import io
 
-# Direct link to the raw model file on GitHub
-MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/blob/main/Final.h5"
-# Load the model
+# ...
 
+MODEL_URL = "https://github.com/ZjCantarona/Emtech2Finals/raw/main/Final.h5"  # Update the URL to point to the raw model file
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
-def load_model():
-    try:
-        # Fetch the model from GitHub using requests
-        response = requests.get(MODEL_URL)
-        response.raise_for_status()
+# ...
 
-        # Load the model from the content of the response using io.BytesIO
-        model_content = response.content
-        return tf.keras.models.load_model(io.BytesIO(model_content))
-    except Exception as e:
-        st.error(f"Error loading the model: {e}")
-        return None
+if uploaded_file is not None:
+    # ... (your existing code for image processing)
+
+    # Load the model
+    model = load_model()
+
+    Generate_pred = st.button("Generate Prediction")
+
+    if Generate_pred and model is not None:
+        # Get the prediction probabilities for each class
+        predictions = model.predict(img_preprocessed)[0]
+
+        # Display the predicted class probabilities
+        for i, (category, label) in enumerate(map_dict.items()):
+            st.text(f"Probability for {label}: {predictions[i]}")
 
 st.write("""
          # Item Purchase
