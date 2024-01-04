@@ -34,18 +34,7 @@ st.write("""
 uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
 
 map_dict = {
-    "Fruit": 'Apple',
-    "Fruit": 'Avocado',
-    "Fruit": 'Orange', 
-    "Fruit": 'Pineapple',
-    "Packages": 'Juice', 
-    "Packages": 'Milk', 
-   "Packages": 'Yoghurt',
-    "Vegetables": 'Cabbage', 
-    "Vegetables": 'Carrot', 
-    "Vegetables": 'Potato', 
-    "Vegetables":'Tomato',
-        }
+    "Fruit", "Packages","Vegetables",}
 
 
 
